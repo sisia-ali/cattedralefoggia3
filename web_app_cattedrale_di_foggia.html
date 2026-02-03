@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cattedrale di Santa Maria Assunta – Foggia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f4f4;
+    }
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+    .left {
+      width: 45%;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .main-image {
+      width: 100%;
+      cursor: pointer;
+    }
+    .main-image img {
+      width: 100%;
+      border-radius: 6px;
+    }
+    .icons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .icon {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px 5px;
+      background: #222;
+      text-align: center;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .icon:hover {
+      background: #444;
+    }
+    .right {
+      width: 55%;
+      background: #fff;
+      padding: 30px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+    .content-area iframe,
+    .content-area img {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 6px;
+    }
+    .text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- SINISTRA -->
+    <div class="left">
+      <div class="main-image" onclick="openMainVideo()">
+        <img src="ct+.jpg" alt="Cattedrale di Foggia" />
+      </div>
+
+      <div class="icons">
+        <div class="icon" onclick="showImages()">Immagini</div>
+        <div class="icon" onclick="showMap()">Mappa</div>
+        <div class="icon" onclick="showVideo()">Video</div>
+        <div class="icon" onclick="show3D()">3D</div>
+        <div class="icon" onclick="showApprofondimento()">Approfondimento</div>
+      </div>
+    </div>
+
+    <!-- DESTRA -->
+    <div class="right">
+      <div id="content" class="content-area">
+        <div class="text" id="defaultText">
+          La Cattedrale di Santa Maria Assunta di Foggia è un monumento simbolo della città, nato nell’XI secolo attorno al culto della Madonna Iconavetere. La sua cripta normanna, voluta da Roberto il Guiscardo, custodisce uno dei più importanti spazi medievali della Puglia. Nel corso dei secoli l’edificio ha integrato elementi romanici, interventi svevi e una profonda ricostruzione barocca dopo il terremoto del 1731. Segnata da distruzioni, guerre e restauri, la Cattedrale resta il cuore storico, artistico e spirituale di Foggia.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const content = document.getElementById('content');
+
+    function openMainVideo() {
+      window.open('https://youtube.com/shorts/x2aYs3tqbek?si=s1TDTWe3c39sH-z5', '_blank');
+    }
+
+    function showImages() {
+      const images = [
+        'cattedrale2.JPG',
+        'cattedr.JPG',
+        'cattdrl.JPG',
+        'catt.JGP',
+        'cattedralefg.jpeg',
+        'cattifg.jpeg'
+      ];
+      let index = 0;
+      content.innerHTML = `<img id="gallery" src="${images[0]}" />`;
+      setInterval(() => {
+        index = (index + 1) % images.length;
+        document.getElementById('gallery').src = images[index];
+      }, 2500);
+    }
+
+    function showMap() {
+      content.innerHTML = `
+        <iframe 
+          src="https://www.google.com/maps?q=41.463472,15.543917&z=16&output=embed">
+        </iframe>`;
+    }
+
+    function showVideo() {
+      content.innerHTML = `
+        <iframe 
+          src="https://www.youtube.com/embed/x2aYs3tqbek" 
+          allowfullscreen>
+        </iframe>`;
+    }
+
+    function show3D() {
+      content.innerHTML = `
+        <div class="sketchfab-embed-wrapper">
+          <iframe title="Cappellone Delle Croci (FIX)" frameborder="0" allowfullscreen 
+            mozallowfullscreen="true" webkitallowfullscreen="true" 
+            allow="autoplay; fullscreen; xr-spatial-tracking" 
+            src="https://sketchfab.com/models/c2e4aae984aa462f81993e089648866d/embed">
+          </iframe>
+        </div>`;
+    }
+
+    function showApprofondimento() {
+      fetch('approfondimento.txt')
+        .then(response => response.text())
+        .then(text => {
+          content.innerHTML = `<div class="text">${text.replace(/\n/g, '<br>')}</div>`;
+        });
+    }
+  </script>
+</body>
+</html>
